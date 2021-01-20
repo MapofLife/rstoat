@@ -1,0 +1,25 @@
+Package: rstoat
+Type: Package
+Title: STOAT
+Version: 0.2.0
+Author: Richard Li, Ajay Ranipeta, John Wilshire, Jeremy Malczyk, Michelle Duong, Robert Guralnick, Adam Wilson, Walter Jetz
+Maintainer: John Wilshire <john.h.wilshire@gmail.com>
+Description: The rstoat package provides a wrapper around https://mol.org/stoat which allows users to 
+    visualize environmentally annotated biodiversity data.
+License: BSD_3_clause + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    httr,
+    jsonlite,
+    keyring,
+    methods
+Suggests: 
+    knitr,
+    ggplot2,
+    rstudioapi,
+    dplyr,
+    leaflet,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 7.0.2

@@ -1,0 +1,166 @@
+---
+title: "Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{methods}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7, 
+  fig.height = 4
+)
+
+options(width = 200)
+```
+
+The Spatiotemporal Observation Annotation Tool (STOAT) is a tool for the automated and flexible environmental annotation of biodiversity datasets with gridded environmental data. rstoat provides a portal to initiate, check the progress of, and retrieve data from annotation requests. This introduction vignette will demonstrate the basics of data annotation, retrieval, and analysis, all in the R environment.
+
+
+## ANNOTATION SUBMISSION AND MANAGEMENT
+
+```{r setup}
+library(rstoat)
+```
+
+The rstoat package provides a wrapper to [STOAT](https://mol.org/stoat).
+To use rstoat, you first need to authenticate using a personal Map of Life account. If you are using RStudio, you can leave the password argument blank to fill via pop-up.
+In this vignette, we will be using a demonstration account preloaded with appropriate data.
+
+```{r, eval = FALSE}
+mol_login("your.email@address.com", "password")
+```
+
+### Sample Data
+
+Demonstration datasets used can be found in the extdata directory. Occurrence data originate from GBIF, for the two species the powerful owl and the budgerigar, filtered to records from 2010- May 21, 2020, limited to continental Australia. DOIs:
+https://doi.org/10.15468/dl.rx9t53
+https://doi.org/10.15468/dl.48e2yv
+
+Powerful owl data consisted of 8,821 records. Budgerigar data consisted of 18,947 records from which 9000 were sampled to match the powerful owl data. Data were reformatted for the Map of Life uploader, and included here. Successfully annotated data are also included, in the STOAT result directory format.
+
+```{r, eval = FALSE}
+# species occurrences formatted for MOL upload
+system.file("extdata", "vignette/powerful_owl_vignette.csv", package = "rstoat")
+system.file("extdata", "vignette/budgerigar_vignette.csv", package = "rstoat")
+
+# annotated results directories
+system.file("extdata", "vignette/powerful_owl_results", package = "rstoat")
+system.file("extdata", "vignette/budgerigar_results", package = "rstoat")
+```
+
+### Annotation
+
+rstoat provides two different functions for annotation. start_annotation_batch() is the primary annotation function and requires the uploading of a biodiversity dataset to the user's MOL account via: https://mol.org/upload/.
+
+Alternatively, users can use start_annotation_simple() for small jobs or pilot jobs before a full annotation. start_annotation_simple() accepts occurrence records directly through the console as a dataframe, though it annotates fewer records than a full annotation job.
+
+Users must additionally provide an environmental layer configuration code that represents the product, layer, spatial and temporal buffers for annotation. See the README.md for a full list of available layers and an explanation of buffers. Multiple layers can be requested for annotation in a single job. get_products() should be used to check that the requested spatial and temporal buffers are within the ranges allowed (for computational reasons).
+
+```{r}
+head(get_products())
+powerful_owl_sample <- read.csv(system.file("extdata", "vignette/powerful_owl_vignette.csv", package = "rstoat"))
+colnames(powerful_owl_sample) <- c("event_id", "lat", "lng", "date")
+simple_results <- start_annotation_simple(powerful_owl_sample[1:50,], "modis-lst_day-1000-1")
+head(simple_results)
+```
+
+Proceeding with full annotation, once a dataset has been uploaded, the user can view their uploaded datasets using my_datasets(). On this account, we have loaded point occurrence datasets from two species, the Powerful Owl (*Ninox strenua*) and the Budgerigar (*Melopsittacus undulatus*). Both datasets are small subsets of the species' GBIF data, over the range of the two species in Australia. my_datasets() will importantly return the dataset_id.
+
+```{r}
+dataset_list <- my_datasets()
+head(dataset_list)
+```
+
+Now, a user can submit a custom annotation job using start_annotation_batch(). The user must submit the dataset_id to be annotated, a name for the job, and a environmental layer code as with the simple annotation.
+
+In this example, we annotate the Powerful Owl dataset with MODIS Land Surface Temperature data with a 1000-meter spatial buffer radius, and two different temporal buffers: 1-day (i.e. only day-of data) and 30-day.
+
+We also annotate the Budgerigar dataset with MODIS Land Surface Temperature data (1000-meter spatial buffer, 1-day temporal buffer) for a species comparison. STOAT supports the combination of multiple species into a single dataset and thus the annotation of multiple species concurrently, but here the species are separated into two jobs for clarity.
+
+```{r, eval = FALSE}
+get_products()
+#start_annotation_batch("dataset_id", "Annotation Title", "Layer Code(s)")
+# Here we retrive the UUID of the most recent datasets (the powerful owl and budgerigar), and start annotation on them
+start_annotation_batch(dataset_list$dataset_id[1], "powerful_owl_vignette", c("modis-lst_day-1000-1", "modis-lst_day-1000-30"))
+start_annotation_batch(dataset_list$dataset_id[2], "budgerigar_vignette", "modis-lst_day-1000-1")
+```
+
+A user can get a list of all of their past and present jobs using my_jobs().
+
+```{r}
+job_list <- my_jobs()
+head(job_list)
+```
+
+Then, they can check in on the status of a submitted annotation job using job_details(). Additionally, they can view the species annotated for a particular successfully completed job using job_species().
+
+```{r}
+#job_details("annotation_id")
+job_details(job_list$annotation_id[1])
+
+#job_species("annotation_id")
+job_species(job_list$annotation_id[1])
+```
+
+After a short while, the annotation will complete, and an email notification will be sent to the user's login address. The user can then pull the results into R using download_annotation(). The function will return the directory name to which the file has been downloaded, which can be saved for easy reference.
+
+```{r}
+#download_annotation("annotation_id", "optional/destination/directory")
+ninox_result_dir <- download_annotation(job_list$annotation_id[1])
+melopsittacus_result_dir <- download_annotation(job_list$annotation_id[2])
+```
+
+For those interested in following the analysis on their own machine, see Sample Data section above for annotated datasets
+
+## DATA VISUALIZATION
+
+Begin data visualization by opening the respective output folder and loading in the appropriate csvs. Records are split across multiple files, which must be first merged. STOAT provides a convenience function, read_output(), that automates this procedure and loads annotated data into a single dataframe.
+
+```{r}
+#dataframe_name <- read_output("path/to/your/downloaded/data/directory")
+ninox <- read_output(system.file("extdata", "vignette/powerful_owl_results", package = "rstoat")
+)
+head(ninox)
+```
+
+Now we can visualize the environmental data for the Powerful Owl with a basic histogram and scatterplot.
+
+```{r}
+hist(ninox$modis_lst_day_1000_1, breaks = 50, xlab = "MODIS LST Day (degrees C)", ylab = "Count",
+     main = "Ninox strenua: MODIS LST Day")
+plot(as.Date(ninox$date.y), (ninox$modis_lst_day_1000_1-273.15), xlim = as.Date(c("2010-01-01", "2019-01-01")),
+     xlab = "Year", ylab = "MODIS LST Day (degrees C)", main = "Ninox strenua: MODIS LST Day")
+axis.Date(1, ninox$date, at=seq(as.Date("2009-01-01"), as.Date("2019-01-01"), by="years"))
+```
+
+We can compare the environmental characterizations of different species to gain insight into their environmental niches. Here, we compare the Powerful Owl with the Budgerigar, annotated with the same spatial and temporal buffers.
+
+```{r}
+melopsittacus <- read_output(system.file("extdata", "vignette/budgerigar_results", package = "rstoat"))
+two_species <- rbind(melopsittacus[,1:10], ninox[,1:10])
+plot((modis_lst_day_1000_1-273.15) ~ as.Date(date.y), data = two_species, col = as.numeric(factor(two_species$scientificname)),
+     xlim = as.Date(c("2010-01-01", "2019-01-01")),
+     pch = as.numeric(factor(two_species$scientificname)), cex = 0.4,
+     xlab = "Year", ylab = "MODIS LST Day (degrees C)", main = "Powerful Owl vs Budgerigar MODIS LST Day")
+axis.Date(1, two_species$date, at=seq(as.Date("2009-01-01"), as.Date("2019-01-01"), by="years"))
+legend(x="topright", legend = as.character(levels(factor(two_species$scientificname))),
+       pch = 1:length(levels(factor(two_species$scientificname))),
+       col=1:length(levels(factor(two_species$scientificname))))
+```
+
+We can also start to explore the impacts of spatial and temporal buffers on the resultant environmental characterizations of species.
+
+```{r}
+plot(density(na.omit(ninox$modis_lst_day_1000_30-273.15)), col = "red",
+     xlab = "MODIS LST Day (degrees C)", main = "Powerful Owl MODIS LST Day 1 vs 30-day t_buff")
+lines(density(na.omit(ninox$modis_lst_day_1000_1-273.15)), col = "black")
+legend(x="topright", legend = c("1-day t_buff", "30-day t_buff"),
+       pch = 20,
+       col=c("black", "red"))
+```

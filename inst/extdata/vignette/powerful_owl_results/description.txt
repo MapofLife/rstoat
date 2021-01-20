@@ -1,0 +1,47 @@
+# powerful_owl_vignette
+## 2020-05-27T23:43:18.778140+00:00
+
+Annotation results for your dataset, Powerful Owl Annotator Demo Dataset, uploaded to Map of Life.
+
+### Available files:
+- params.json: annotation parameters
+- species.csv: dataset records along with an "event_id" for unique spatiotemporal values
+- unique_events.csv: unique spatiotemporal records
+- modis_lst_day_results.csv: Results for MODIS - Land Surface Temperature Day
+- modis_lst_day_results.csv: Results for MODIS - Land Surface Temperature Day
+
+
+
+### Result columns:
+- event_id: A uuid, that will be used to match the annotation back to corresponding records
+- product: The product i.e. 'modis'
+- variable: The variable i.e. 'lst_day'
+- s_buff: The spatial buffer radius in meters
+- t_buff: The temporal buffer in days. 
+- value: The temporal (arithmetic) mean of the zonal mean (renamed from "mean")
+- stdev: The temporal mean of the zonal standard deviation
+- pixel_count: The temporal mean of the number of non null pixels per scene
+- total_scenes: The total number of scenes in the range
+- total_value_scenes: The total number of scenes which have a non-null zonal reduction
+- notes: A place for string errors i.e. 'output width or height is less than 1 pixel'
+
+
+### Notes:
+- Temporal buffer (t_buff) applies to individual records and filters scenes prior to the record's event date.
+- Spatial buffer (s_buff) uniform weight applied to individual records
+
+
+### Selected products and metadata
+ 
+Product: MODIS
+Variable: Land Surface Temperature Day
+Temporal range: 2000-02-24 - 2018-11-16
+Description: This product is from MODIS (M*D11A1/A2) with a temporal resolution of Daily and a spatial resolution of 1km. It is available from 2000-02-24 to 2018-11-16. The values have been masked using NASA's quality control flags to keep only 'good quality data' (QC Bits 0-4 00** or 0100). More information about this product is available at https://lpdaac.usgs.gov/products/myd11a1v006/
+QC Notes: The values have been masked using NASA's quality control flags to keep only "good quality data" (QC Bits 0-4 00** or 0100)
+  
+Product: MODIS
+Variable: Land Surface Temperature Day
+Temporal range: 2000-02-24 - 2018-11-16
+Description: This product is from MODIS (M*D11A1/A2) with a temporal resolution of Daily and a spatial resolution of 1km. It is available from 2000-02-24 to 2018-11-16. The values have been masked using NASA's quality control flags to keep only 'good quality data' (QC Bits 0-4 00** or 0100). More information about this product is available at https://lpdaac.usgs.gov/products/myd11a1v006/
+QC Notes: The values have been masked using NASA's quality control flags to keep only "good quality data" (QC Bits 0-4 00** or 0100)
+ 

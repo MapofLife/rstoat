@@ -1,0 +1,1 @@
+{"dataset_id": "5c1a45a4-7463-4786-9330-6922b44b4a25", "title": "powerful_owl_vignette", "layers": [{"product": "modis", "variable": "lst_day", "spatial": 1000, "temporal": 1}, {"product": "modis", "variable": "lst_day", "spatial": 1000, "temporal": 30}]}
