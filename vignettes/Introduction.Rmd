@@ -71,8 +71,10 @@ Please see the function documentation for start_annotation_simple() for explanat
 ```{r}
 head(get_products())
 powerful_owl_sample <- read.csv(system.file("extdata", "vignette/powerful_owl_vignette.csv", package = "rstoat"))
-colnames(powerful_owl_sample) <- c("event_id", "lat", "lng", "date")
-simple_results <- start_annotation_simple(powerful_owl_sample[1:50,], "modis-lst_day-1000-1")
+head(powerful_owl_sample)
+simple_results <- start_annotation_simple(powerful_owl_sample[1:50,], "modis-lst_day-1000-1",
+                                          coords = c("decimalLongitude", "decimalLatitude"),
+                                          date = "eventDate")
 head(simple_results)
 ```
 

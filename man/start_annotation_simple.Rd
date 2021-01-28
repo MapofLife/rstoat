@@ -4,15 +4,24 @@
 \alias{start_annotation_simple}
 \title{Submit a dataframe for on the fly annotation}
 \usage{
-start_annotation_simple(events, layers)
+start_annotation_simple(
+  events,
+  layers,
+  coords = c("lng", "lat"),
+  date = "date"
+)
 }
 \arguments{
-\item{events}{A data.frame with the following columns: event_id (character), lat (numeric), lng (numeric), date (string/date) in the format YYYY-MM-DD}
+\item{events}{A data.frame for on the fly annotation}
 
 \item{layers}{A list of parameters or vector of codes, of the layers, see the examples below.}
+
+\item{coords}{A vector of length 2 containing column names for record longitudes, and latitudes.}
+
+\item{date}{Column name for record dates, must take the format YYYY-MM-DD}
 }
 \value{
-A data.frame containing successfully annotated values.
+Input data.frame with values from the annotation appended, in addition to unique identifier field event_id.
 \itemize{
  \item event_id: A unique identifier for each occurrence
  \item product: Product used for annotation

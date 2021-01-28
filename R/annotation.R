@@ -52,10 +52,12 @@ start_annotation_batch <- function(dataset_id, title, layers) {
 #'
 #' Does not require login - for use for small numbers of records and pilot jobs
 #'
-#' @param events A data.frame with the following columns: event_id (character), lat (numeric), lng (numeric), date (string/date) in the format YYYY-MM-DD
+#' @param events A data.frame for on the fly annotation
 #' @param layers A list of parameters or vector of codes, of the layers, see the examples below.
+#' @param coords A vector of length 2 containing column names for record longitudes, and latitudes.
+#' @param date Column name for record dates, dates must take the format YYYY-MM-DD
 #'
-#' @return A data.frame containing successfully annotated values.
+#' @return Input data.frame with values from the annotation appended, in addition to unique identifier field event_id.
 #' \itemize{
 #'  \item event_id: A unique identifier for each occurrence
 #'  \item product: Product used for annotation
@@ -79,14 +81,19 @@ start_annotation_batch <- function(dataset_id, title, layers) {
 #' layers <- 'landsat8-evi-100-16'
 #' start_annotation_simple(events, layers)
 #' }
-start_annotation_simple <- function(events, layers) {
-  if(any(!(c("event_id", "lng", "lat", "date") %in% names(events)))) {
-    stop("Dataframe must contain columns 'event_id', 'lng', 'lat', 'date'")
-  }
+start_annotation_simple <- function(events, layers, coords=c('lng','lat'), date='date') {
+  events$event_id <- 1:nrow(events)
+  if(any(!(c(coords[1], coords[2], date) %in% names(events)))) {
+    stop("Dataframe must contain either columns 'lng', 'lat', 'date', or user must provide arguments for alternate column names")}
+  events_subset <- data.frame(event_id = events$event_id,
+                              lng = events[[coords[1]]],
+                              lat = events[[coords[2]]],
+                              date = events[[date]])
   body <- list(
-    events = events,
+    events = events_subset,
     params = extract_layer(layers)
   )
   resp <- post_json('annotate', body = body, otf=T, authenticate=FALSE)
+  resp <- merge(events, resp, by = 'event_id')
   resp
 }

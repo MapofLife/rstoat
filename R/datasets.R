@@ -111,7 +111,7 @@ job_species <- function (annotation_id) {
       annotated = count_per_product
     )
   })
-  results <- jsonlite::rbind_pages(results)
+  do.call(rbind.data.frame, results)
   row.names(results) <- c()
   results
 }
