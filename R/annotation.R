@@ -53,9 +53,19 @@ start_annotation_batch <- function(dataset_id, title, layers) {
 #' Does not require login - for use for small numbers of records and pilot jobs
 #'
 #' @param events A data.frame with the following columns: event_id (character), lat (numeric), lng (numeric), date (string/date) in the format YYYY-MM-DD
-#'
 #' @param layers A list of parameters or vector of codes, of the layers, see the examples below.
 #'
+#' @return A data.frame containing successfully annotated values.
+#' \itemize{
+#'  \item event_id: A unique identifier for each occurrence
+#'  \item product: Product used for annotation
+#'  \item variable: Variable used for annotation
+#'  \item s_buff: Spatial buffer in meters applied to occurrence
+#'  \item t_buff: Temporal buffer in days applied to occurrence
+#'  \item value: Annotated value of occurrence from requested layer (mean within buffer)
+#'  \item stdev: Standard deviation of values within buffer
+#'  \item valid_pixel_count: Number of pixels within buffered area'
+#' }
 #' @export
 #'
 #' @examples
