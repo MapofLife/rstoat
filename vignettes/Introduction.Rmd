@@ -110,7 +110,7 @@ head(job_list)
 
 Then, they can check in on the status of a submitted annotation job using job_details(). Additionally, they can view the species annotated for a particular successfully completed job using job_species().
 
-```{r}
+```{r, eval = FALSE}
 #job_details("annotation_id")
 job_details(job_list$annotation_id[1])
 
@@ -120,7 +120,7 @@ job_species(job_list$annotation_id[1])
 
 After a short while, the annotation will complete, and an email notification will be sent to the user's login address. The user can then pull the results into R using download_annotation(). The function will return the directory name to which the file has been downloaded, which can be saved for easy reference.
 
-```{r}
+```{r, eval = FALSE}
 #download_annotation("annotation_id", "optional/destination/directory")
 ninox_result_dir <- download_annotation(job_list$annotation_id[1])
 melopsittacus_result_dir <- download_annotation(job_list$annotation_id[2])

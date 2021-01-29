@@ -50,7 +50,7 @@ start_annotation_batch <- function(dataset_id, title, layers) {
 
 #' Submit a dataframe for on the fly annotation
 #'
-#' Does not require login - for use for small numbers of records and pilot jobs
+#' Does not require login - for use for small numbers of records (limit 1000 records) and pilot jobs
 #'
 #' @param events A data.frame for on the fly annotation
 #' @param layers A list of parameters or vector of codes, of the layers, see the examples below.

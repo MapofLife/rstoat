@@ -18,7 +18,7 @@ start_annotation_simple(
 
 \item{coords}{A vector of length 2 containing column names for record longitudes, and latitudes.}
 
-\item{date}{Column name for record dates, must take the format YYYY-MM-DD}
+\item{date}{Column name for record dates, dates must take the format YYYY-MM-DD}
 }
 \value{
 Input data.frame with values from the annotation appended, in addition to unique identifier field event_id.
@@ -34,7 +34,7 @@ Input data.frame with values from the annotation appended, in addition to unique
 }
 }
 \description{
-Does not require login - for use for small numbers of records and pilot jobs
+Does not require login - for use for small numbers of records (limit 1000 records) and pilot jobs
 }
 \examples{
 \dontrun{
