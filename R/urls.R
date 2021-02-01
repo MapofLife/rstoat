@@ -19,8 +19,10 @@ http_error_handle_parse <- function(resp, enc = "UTF-8", simplifyVector = TRUE) 
     e_message <- tryCatch(
     {
       jsonlite::fromJSON(httr::content(resp, "text", encoding = enc), simplifyVector = T)$message
-    }, error = function(e) {'Unable to parse error message'})
-
+    }, error = function(e) {paste(
+        'Unable to parse error message: ', httr::text_content(resp)
+      )
+    })
     error_message <- paste0(
       "STOAT API request failed [", httr::status_code(resp),"]\n",
       e_message
@@ -51,3 +53,32 @@ post_json <- function (..., body = list(), enc = "UTF-8", simplifyVector = TRUE,
   }
   http_error_handle_parse(resp, enc, simplifyVector = simplifyVector)
 }
+
+
+#' Download sample annotation data
+#'
+#' @param destination The directory where to store the data.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' download_sample_data()
+#' }
+download_sample_data <- function(destination = '.') {
+  if (!dir.exists(destination)) stop(paste('No directory exists:', destination))
+  message('Downloading powerful owl vignette data.')
+  download.file(build_url('samples/powerful_owl/vignette', otf=T), file.path(destination, 'powerful_owl_vignette.csv'))
+
+  message('Downloading powerful owl results data.')
+  download.file(build_url('samples/powerful_owl/results', otf=T), file.path(destination, 'powerful_owl_results.csv'))
+
+  message('Downloading budgerigar vignette data.')
+  download.file(build_url('samples/budgerigar/vignette', otf=T), file.path(destination, 'budgerigar_vignette.csv'))
+
+  message('Downloading budgerigar results data.')
+  download.file(build_url('samples/budgerigar/results', otf=T), file.path(destination, 'budgerigar_results.csv'))
+
+  message('Done.')
+}
+

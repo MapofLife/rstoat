@@ -93,7 +93,7 @@ start_annotation_simple <- function(events, layers, coords=c('lng','lat'), date=
     events = events_subset,
     params = extract_layer(layers)
   )
-  resp <- post_json('annotate', body = body, otf=T, authenticate=FALSE)
+  resp <- post_json('annotate/ondemand', body = body, otf=T, authenticate=FALSE)
   resp <- merge(events, resp, by = 'event_id')
   resp
 }
