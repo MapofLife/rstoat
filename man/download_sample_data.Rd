@@ -4,10 +4,13 @@
 \alias{download_sample_data}
 \title{Download sample annotation data}
 \usage{
-download_sample_data(destination = ".")
+download_sample_data(dir = "sample_data")
 }
 \arguments{
-\item{destination}{The directory where to store the data.}
+\item{dir}{The directory where to store the data.}
+}
+\value{
+The path of the downloaded sample data.
 }
 \description{
 Download sample annotation data

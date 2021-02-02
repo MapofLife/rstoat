@@ -129,3 +129,10 @@ Read and unpack the downloaded data into a single data.frame:
 ```r
 read_output("path/to/your/extracted/annotation")
 ```
+
+Download example data (used in vignette)
+
+```r
+download_example_data("destination/path")
+```
+

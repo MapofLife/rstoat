@@ -44,16 +44,12 @@ Demonstration datasets used can be found in the extdata directory. Occurrence da
 https://doi.org/10.15468/dl.rx9t53
 https://doi.org/10.15468/dl.48e2yv
 
-Powerful owl data consisted of 8,821 records. Budgerigar data consisted of 18,947 records from which 9000 were sampled to match the powerful owl data. Data were reformatted for the Map of Life uploader, and included here. Successfully annotated data are also included, in the STOAT result directory format.
+Powerful owl data consisted of 8,821 records. Budgerigar data consisted of 18,947 records from which 9000 were sampled to match the powerful owl data. Data were reformatted for the Map of Life uploader, and provided here. Successfully annotated data are also provided, in the STOAT result directory format. Access sample data using the following function:
 
-```{r, eval = FALSE}
-# species occurrences formatted for MOL upload
-system.file("extdata", "vignette/powerful_owl_vignette.csv", package = "rstoat")
-system.file("extdata", "vignette/budgerigar_vignette.csv", package = "rstoat")
-
-# annotated results directories
-system.file("extdata", "vignette/powerful_owl_results", package = "rstoat")
-system.file("extdata", "vignette/budgerigar_results", package = "rstoat")
+```{r}
+#download_sample_data("destination/path")
+samples_directory <- download_sample_data()
+list.files(samples_directory)
 ```
 
 ### Annotation
@@ -70,7 +66,7 @@ Please see the function documentation for start_annotation_simple() for explanat
 
 ```{r}
 head(get_products())
-powerful_owl_sample <- read.csv(system.file("extdata", "vignette/powerful_owl_vignette.csv", package = "rstoat"))
+powerful_owl_sample <- read.csv("sample_data/powerful_owl_vignette.csv")
 head(powerful_owl_sample)
 simple_results <- start_annotation_simple(powerful_owl_sample[1:50,], "modis-lst_day-1000-1",
                                           coords = c("decimalLongitude", "decimalLatitude"),
@@ -138,8 +134,8 @@ Begin data visualization by opening the respective output folder and loading in 
 # This it the code you would use if you directly downloaded a successful annotation
 #ninox <- read_output(ninox_result_dir)
 
-# Instead, here we load the equivalent output directly from this package's data
-ninox <- read_output(system.file("extdata", "vignette/powerful_owl_results", package = "rstoat"))
+# Instead, here we read the equivalent output from the sample data directory
+ninox <- read_output(paste0(samples_directory, "/powerful_owl_results"))
 head(ninox)
 ```
 
@@ -158,7 +154,7 @@ axis.Date(1, ninox$date, at=seq(as.Date("2009-01-01"), as.Date("2019-01-01"), by
 We can compare the environmental characterizations of different species to gain insight into their environmental niches. Here, we compare the Powerful Owl with the Budgerigar, annotated with the same spatial and temporal buffers.
 
 ```{r}
-melopsittacus <- read_output(system.file("extdata", "vignette/budgerigar_results", package = "rstoat"))
+melopsittacus <- read_output(paste0(samples_directory, "/budgerigar_results"))
 two_species <- rbind(melopsittacus[,1:10], ninox[,1:10])
 plot((modis_lst_day_1000_1-273.15) ~ as.Date(date.y), data = two_species,
      col = as.numeric(factor(two_species$scientificname)),

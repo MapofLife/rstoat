@@ -57,28 +57,38 @@ post_json <- function (..., body = list(), enc = "UTF-8", simplifyVector = TRUE,
 
 #' Download sample annotation data
 #'
-#' @param destination The directory where to store the data.
-#'
+#' @param dir The directory where to store the data.
+#' @return The path of the downloaded sample data.
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' download_sample_data()
 #' }
-download_sample_data <- function(destination = '.') {
-  if (!dir.exists(destination)) stop(paste('No directory exists:', destination))
-  message('Downloading powerful owl vignette data.')
-  download.file(build_url('samples/powerful_owl/vignette', otf=T), file.path(destination, 'powerful_owl_vignette.csv'))
+download_sample_data <- function(dir = 'sample_data') {
+  if (!dir.exists(dir)) {
+    dir.create(dir)
+    message(paste0('Created directory: ', dir))
+  }
 
-  message('Downloading powerful owl results data.')
-  download.file(build_url('samples/powerful_owl/results', otf=T), file.path(destination, 'powerful_owl_results.csv'))
+  message('Downloading powerful owl occurrence data.')
+  utils::download.file(build_url('samples/powerful_owl/vignette', otf=T), file.path(dir, 'powerful_owl_vignette.csv'), mode='wb')
 
-  message('Downloading budgerigar vignette data.')
-  download.file(build_url('samples/budgerigar/vignette', otf=T), file.path(destination, 'budgerigar_vignette.csv'))
+  message('Downloading budgerigar occurrence data.')
+  utils::download.file(build_url('samples/budgerigar/vignette', otf=T), file.path(dir, 'budgerigar_vignette.csv'), mode='wb')
 
-  message('Downloading budgerigar results data.')
-  download.file(build_url('samples/budgerigar/results', otf=T), file.path(destination, 'budgerigar_results.csv'))
+  tmp_path <- tempfile()
+  message('Downloading powerful owl annotated results data.')
+  utils::download.file(build_url('samples/powerful_owl/results', otf=T), file.path(tmp_path), mode='wb')
+  message('Unzipping powerful owl\n')
+  utils::unzip(tmp_path, exdir=paste0(dir, '/powerful_owl_results'))
 
-  message('Done.')
+  message('Downloading budgerigar annotated results data.')
+  utils::download.file(build_url('samples/budgerigar/results', otf=T), file.path(tmp_path), mode='wb')
+  message('Unzipping budgerigar\n')
+  utils::unzip(tmp_path, exdir=paste0(dir, '/budgerigar_results'))
+
+  message(paste0('Annotation available in directory: ', dir))
+  return(dir)
 }
 
