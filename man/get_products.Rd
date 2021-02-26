@@ -2,7 +2,7 @@
 % Please edit documentation in R/products.R
 \name{get_products}
 \alias{get_products}
-\title{Get products available to annotate with}
+\title{Retrieve product metadata}
 \usage{
 get_products()
 }
@@ -10,6 +10,7 @@ get_products()
 A data.frame of spatial and temporal buffer limits
 }
 \description{
+Get information on available products for annotation.
 Get the spatial and temporal buffer limits for use in when creating a custom annotation.
 }
 \examples{

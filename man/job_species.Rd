@@ -2,7 +2,7 @@
 % Please edit documentation in R/datasets.R
 \name{job_species}
 \alias{job_species}
-\title{View species in an annotation}
+\title{View annotation job species}
 \usage{
 job_species(annotation_id)
 }
@@ -13,6 +13,7 @@ job_species(annotation_id)
 A data.frame, with species and counts in this annotation.
 }
 \description{
+View the species in a completed annotation and other details. Only works for successfully completed jobs.
 Requires login, please run mol_login(<email_address>)
 Uses the output from my_jobs().
 }

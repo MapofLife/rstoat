@@ -2,7 +2,7 @@
 % Please edit documentation in R/datasets.R
 \name{my_datasets}
 \alias{my_datasets}
-\title{List logged in users uploaded datasets (uploaded to https://mol.org through https://mol.org/upload).}
+\title{View datasets}
 \usage{
 my_datasets()
 }
@@ -10,6 +10,7 @@ my_datasets()
 A data frame of a users datasets and their associated ids.
 }
 \description{
+List logged-in user's uploaded datasets (uploaded to https://mol.org through https://mol.org/upload).
 Requires login, please run mol_login(<email_address>)
 }
 \examples{

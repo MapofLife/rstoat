@@ -2,7 +2,7 @@
 % Please edit documentation in R/annotation.R
 \name{start_annotation_batch}
 \alias{start_annotation_batch}
-\title{Submit a dataset previously uploaded on mol.org for annotation.}
+\title{Start batch annotation}
 \usage{
 start_annotation_batch(dataset_id, title, layers)
 }
@@ -14,6 +14,7 @@ start_annotation_batch(dataset_id, title, layers)
 \item{layers}{A list of parameters or vector of codes, of the layers, see the examples below.}
 }
 \description{
+Submit a dataset previously uploaded on mol.org for annotation.
 To upload a dataset please visit https://mol.org/upload/
 Requires login, please run mol_login(<email_address>)
 }

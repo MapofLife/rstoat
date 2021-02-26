@@ -1,6 +1,5 @@
-#' Read annotation output into R.
-#'
-#' This is a convenience function which reads and joins annotation results spread across multiple files for space efficiency.
+#' @title Read annotation output into R
+#' @description Convenience function which reads and joins annotation results spread across multiple files for space efficiency.
 #' To run this function, please first download annotated data first using download_annotation()
 #'
 #' @param directory The path of the data.

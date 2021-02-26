@@ -29,18 +29,18 @@ library(rstoat)
 ```
 
 The rstoat package provides a wrapper to [STOAT](https://mol.org/stoat).
-To use rstoat, you first need to authenticate using a personal Map of Life account. If you are using RStudio, you can leave the password argument blank to fill via pop-up.
+To use rstoat, you first need to authenticate using a personal Map of Life (MOL) account. If you are using RStudio, you can leave the password argument blank to fill via pop-up.
 
 ```{r, eval = FALSE}
 mol_login("your.email@address.com", "password")
 ```
 
 **NOTE:**
-This vignette demonstrates code for an account preloaded with appropriate data (the sample species occurrence datasets below, which are additionally included within the rstoat package data). Your Map of Life account starts out empty and thus certain lines of code will not work right out of the box.
+This vignette demonstrates code for an account preloaded with appropriate data (the sample species occurrence datasets below, which are additionally included for download using download_sample_data()). Your Map of Life account starts out empty and thus certain lines of code will not work right out of the box.
 
 ### Sample Data
 
-Demonstration datasets used can be found in the extdata directory. Occurrence data originate from GBIF, for the two species the powerful owl and the budgerigar, filtered to records from January 1, 2010 - May 21, 2020, limited to continental Australia. DOIs:
+Occurrence data originate from GBIF, for the two species the powerful owl and the budgerigar, filtered to records from January 1, 2010 - May 21, 2020, limited to continental Australia. DOIs:
 https://doi.org/10.15468/dl.rx9t53
 https://doi.org/10.15468/dl.48e2yv
 
@@ -58,11 +58,11 @@ rstoat provides two different functions for annotation. start_annotation_batch()
 
 Alternatively, users can use start_annotation_simple() for small jobs or pilot jobs before a full annotation. start_annotation_simple() accepts occurrence records directly through the console as a dataframe, though it annotates fewer records than a full annotation job.
 
-For both types of annotations, users must provide an environmental layer configuration code that represents the product, layer, spatial and temporal buffers for annotation. See the README.md for a full list of available layers and an explanation of buffers. Multiple layers can be requested for annotation in a single job.
+For both types of annotations, users must provide an environmental layer configuration code that represents the product, layer, spatial and temporal buffers for annotation. See https://mol.org/stoat/sources for a full list of available layers and an explanation of buffers. Multiple layers can be requested for annotation in a single job.
 
 The environmental layer code takes the form: "product-variable-spatialbuffer-temporalbuffer". Use get_products() to view the full list of product and variable codes, and to check that the requested spatial and temporal buffers are within the ranges allowed (for computational reasons). The units of the spatial and temporal buffers are meters, and days, respectively.
 
-Please see the function documentation for start_annotation_simple() for explanations of the output columns
+Please see ?start_annotation_simple() for definitions of the output columns
 
 ```{r}
 head(get_products())
@@ -76,7 +76,7 @@ head(simple_results)
 
 Proceeding with full annotation, once a dataset has been uploaded, the user can view their uploaded datasets using my_datasets(). On this account, we have loaded point occurrence datasets from two species, the Powerful Owl (*Ninox strenua*) and the Budgerigar (*Melopsittacus undulatus*). Both datasets are small subsets of the species' GBIF data, over the range of the two species in Australia. my_datasets() will importantly return the dataset_id.
 
-```{r}
+```{r,eval = FALSE}
 dataset_list <- my_datasets()
 head(dataset_list)
 ```
@@ -97,9 +97,9 @@ start_annotation_batch(dataset_list$dataset_id[1], "powerful_owl_vignette", c("m
 start_annotation_batch(dataset_list$dataset_id[2], "budgerigar_vignette", "modis-lst_day-1000-1")
 ```
 
-A user can get a list of all of their past and present jobs using my_jobs().
+A user can get a list of all of their past and present jobs and their statuses using my_jobs().
 
-```{r}
+```{r, eval = FALSE}
 job_list <- my_jobs()
 head(job_list)
 ```
@@ -126,7 +126,7 @@ For those interested in following the analysis on their own machine, see Sample 
 
 ## DATA VISUALIZATION
 
-Begin data visualization by opening the respective output folder and loading in the appropriate csvs. Records are split across multiple files, which must be first merged. STOAT provides a convenience function, read_output(), that automates this procedure and loads annotated data into a single dataframe.
+Begin data visualization by opening the respective output folder and loading in the appropriate csvs. Records are split across multiple files (one for each layer annotated), which must be first merged. STOAT provides a convenience function, read_output(), that automates this procedure and loads annotated data into a single dataframe.
 
 ```{r}
 #dataframe_name <- read_output("path/to/your/downloaded/data/directory")

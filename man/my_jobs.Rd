@@ -2,7 +2,7 @@
 % Please edit documentation in R/datasets.R
 \name{my_jobs}
 \alias{my_jobs}
-\title{List logged in users current annotation jobs.}
+\title{List all jobs}
 \usage{
 my_jobs()
 }
@@ -10,6 +10,7 @@ my_jobs()
 A data.frame containing jobs metadata.
 }
 \description{
+List logged-in user's past and current annotation jobs.
 Requires login, please run mol_login(<email_address>)
 }
 \examples{

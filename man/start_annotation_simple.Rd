@@ -2,7 +2,7 @@
 % Please edit documentation in R/annotation.R
 \name{start_annotation_simple}
 \alias{start_annotation_simple}
-\title{Submit a dataframe for on the fly annotation}
+\title{Start simple annotation}
 \usage{
 start_annotation_simple(
   events,
@@ -34,7 +34,8 @@ Input data.frame with values from the annotation appended, in addition to unique
 }
 }
 \description{
-Does not require login - for use for small numbers of records (limit 1000 records) and pilot jobs
+Submit a dataframe for on-the-fly annotation.
+Does not require login - for use for small numbers of records and pilot jobs
 }
 \examples{
 \dontrun{

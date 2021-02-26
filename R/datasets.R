@@ -1,5 +1,6 @@
-#' List logged in users uploaded datasets (uploaded to https://mol.org through https://mol.org/upload).
+#' @title View datasets
 #'
+#' @description List logged-in user's uploaded datasets (uploaded to https://mol.org through https://mol.org/upload).
 #' Requires login, please run mol_login(<email_address>)
 #'
 #' @return A data frame of a users datasets and their associated ids.
@@ -13,8 +14,9 @@ my_datasets <- function () {
   get_json('user','datasets')
 }
 
-#' List logged in users current annotation jobs.
+#' @title List all jobs
 #'
+#' @description List logged-in user's past and current annotation jobs.
 #' Requires login, please run mol_login(<email_address>)
 #'
 #' @return A data.frame containing jobs metadata.
@@ -27,10 +29,10 @@ my_jobs <- function () {
   get_json('user','annotations')
 }
 
-#' Get details of a custom annotation job.
+#' @title Retrieve annotation job details
 #'
-#' Requires login, please run mol_login(<email_address>)
-#' Uses the output from my_jobs()
+#' @description Get details of a batch annotation job. Requires login, please run mol_login(<email_address>).
+#' Uses the output from my_jobs().
 #'
 #' @param annotation_id The annotation id from from my_jobs().
 #'
@@ -51,8 +53,9 @@ job_details <- function (annotation_id) {
   res$params
 }
 
-#' Download results of a successfully completed custom annotation.
+#' @title Download annotation results
 #'
+#' @description Download results of a successfully completed batch annotation.
 #' Requires login, please run mol_login(<email_address>)
 #' Uses the output from my_jobs() for the annotation id.
 #'
@@ -86,8 +89,9 @@ download_annotation <- function (annotation_id, dir = 'annotation_results') {
   }
 }
 
-#' View species in an annotation
+#' @title View annotation job species
 #'
+#' @description View the species in a completed annotation and other details. Only works for successfully completed jobs.
 #' Requires login, please run mol_login(<email_address>)
 #' Uses the output from my_jobs().
 #'

@@ -15,8 +15,9 @@ extract_layer <- function(layers) {
 }
 
 
-#' Submit a dataset previously uploaded on mol.org for annotation.
+#' @title Start batch annotation
 #'
+#' @description Submit a dataset previously uploaded on mol.org for annotation.
 #' To upload a dataset please visit https://mol.org/upload/
 #' Requires login, please run mol_login(<email_address>)
 #'
@@ -47,10 +48,10 @@ start_annotation_batch <- function(dataset_id, title, layers) {
 }
 
 
-
-#' Submit a dataframe for on the fly annotation
+#' @title Start simple annotation
 #'
-#' Does not require login - for use for small numbers of records (limit 1000 records) and pilot jobs
+#' @description Submit a dataframe for on-the-fly annotation.
+#' Does not require login - for use for small numbers of records and pilot jobs
 #'
 #' @param events A data.frame for on the fly annotation
 #' @param layers A list of parameters or vector of codes, of the layers, see the examples below.

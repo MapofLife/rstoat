@@ -2,7 +2,7 @@
 % Please edit documentation in R/datasets.R
 \name{download_annotation}
 \alias{download_annotation}
-\title{Download results of a successfully completed custom annotation.}
+\title{Download annotation results}
 \usage{
 download_annotation(annotation_id, dir = "annotation_results")
 }
@@ -15,6 +15,7 @@ download_annotation(annotation_id, dir = "annotation_results")
 The path of the downloaded annotation.
 }
 \description{
+Download results of a successfully completed batch annotation.
 Requires login, please run mol_login(<email_address>)
 Uses the output from my_jobs() for the annotation id.
 }

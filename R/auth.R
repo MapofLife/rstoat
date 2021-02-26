@@ -1,4 +1,6 @@
-#' Login to your Map of Life account.
+#' @title Map of Life Login
+#'
+#' @description Login to your Map of Life account.
 #'
 #' @param email The email address associated with your Map of Life Account.
 #' @param password Your map of life password. If left blank, and you are in RStudio you can enter it via a secure popup.
@@ -8,7 +10,6 @@
 #' \dontrun{
 #' mol_login("your.email@company.com")
 #' }
-# TODO, add an option to just read from config file
 mol_login <- function (email, password = NULL) {
   if (class(email) != "character") stop("Please provide an email.")
   if (is.null(password) & Sys.getenv("RSTUDIO") == "1") {

@@ -1,5 +1,4 @@
 
-
 # modis_lst_day_1000_1 -> modis-lst_day-1000-1
 # landsat8_evi_30_16   -> landsat8-evi-30-16
 internal_to_code <- function(code){
