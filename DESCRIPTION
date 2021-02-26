@@ -12,6 +12,7 @@ LazyData: true
 Imports:
     httr,
     jsonlite,
+    curl,
     keyring,
     methods
 Suggests: 
