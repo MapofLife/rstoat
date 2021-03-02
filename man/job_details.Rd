@@ -2,7 +2,7 @@
 % Please edit documentation in R/datasets.R
 \name{job_details}
 \alias{job_details}
-\title{Get details of a custom annotation job.}
+\title{Retrieve annotation job details}
 \usage{
 job_details(annotation_id)
 }
@@ -13,8 +13,8 @@ job_details(annotation_id)
 A data.frame of layers and their statuses, along with the annotation_id, and the dataset_id for the custom annotation.
 }
 \description{
-Requires login, please run mol_login(<email_address>)
-Uses the output from my_jobs()
+Get details of a batch annotation job. Requires login, please run mol_login(<email_address>).
+Uses the output from my_jobs().
 }
 \examples{
 \dontrun{

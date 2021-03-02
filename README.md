@@ -4,9 +4,9 @@
 
 The Spatiotemporal Observation Annotation Tool (STOAT) is a platform for the fusion of spatiotemporal biodiversity data (e.g. occurrence records) with remote-sensing and other gridded environmental data. Data fusion (also referred to as environmental annotation) is conducted by retrieving environmental layer values associated with the spatiotemporal coordinates of biodiversity data. STOAT's cloud-based computations simplify and automate the environmental annotation process, eliminating the need for users to download or interface directly with complex environmental layers. STOAT brings versatile environmental annotations to the fingertips of a broader range of scientists, establishing a powerful analysis workflow for rapidly accumulating biodiversity and environmental data.
 
-STOAT is hosted by Map of Life (https://mol.org) as part of its broader biodiversity informatics platform. For updates on the STOAT project, please visit the homepage at (https://mol.org/stoat).
+STOAT is hosted by Map of Life (https://mol.org) as part of its broader biodiversity informatics platform. Please see the STOAT project homepage at (https://mol.org/stoat).
 
-rstoat is the R package interface to the STOAT platform. rstoat allows for the easy integration of STOAT into existing R-based workflows, and provides all the core functionalities of the STOAT web application, most importantly the submission of annotation tasks, and the retrieval of annotation results.
+rstoat is the R package interface to STOAT. rstoat allows for the easy integration of STOAT into existing R-based workflows, and provides all the core functionalities of the STOAT web application, most importantly the submission of annotation tasks, and the retrieval of annotation results. The public repository for rstoat can be found at: https://github.com/MapofLife/rstoat
 
 ## Background
 
@@ -36,13 +36,13 @@ For a full and up-to-date list of layers available in STOAT, visit https://mol.o
 
 ### Processing
 
-All derived environmental datasets, unless specified, are unmodified from their original sources for maximum transparency. Environmental layers are hosted by [Descartes Labs](https://www.descarteslabs.com), an environmental data repository and refinery, as well as Google Earth Engine, and are accessed through a series of internal API calls. Documentation for all included datasets can be found at (https://mol.org/stoat/sources)
+All derived environmental datasets, unless specified, are unmodified from their original sources. Environmental layers are hosted by [Descartes Labs](https://www.descarteslabs.com), an environmental data repository and refinery, as well as Google Earth Engine, and are accessed through a series of internal API calls. Documentation for all included datasets can be found at (https://mol.org/stoat/sources)
 
-Remote sensing products such as MODIS and Landsat are filtered to keep only high quality observations (removing clouds and other poor quality data). Specific metadata for each product (including the quality control filtering) are provided with downloaded data.   
+Remote sensing products such as MODIS and Landsat are filtered to keep only high quality observations (removing clouds and other poor quality data). Specific metadata for each product (including the quality control filtering) are provided with downloaded data.
 
 ## Biodiversity Data
 
-Occurrence data should be first uploaded into an individual's Map of Life account before commencing annotation. Data for upload take the format of a CSV with columns for the species scientific name, latitude, longitude, and date (See https://mol.org/upload/ for more details). Data can come from a variety of sources. Online repositories such as GBIF provide huge quantities of species data free of charge. More frequently, a user may wish to annotate a private or personal dataset. Data uploaded can be marked as private to restrict access to only the data owner.
+Using the batch annotator, occurrence data should be first uploaded into an individual's Map of Life account before commencing annotation. Data for upload take the format of a CSV with columns for the species scientific name, latitude, longitude, and date (See https://mol.org/upload/ for more details). Data can come from a variety of sources. Online repositories such as GBIF provide huge quantities of species data free of charge. More frequently, a user may wish to annotate a private or personal dataset. Data uploaded can be marked as private to restrict access to only the data owner.
 
 ## Spatial and Temporal Buffers
 
@@ -62,6 +62,13 @@ Funding for the development of STOAT was provided by NASA grants AIST-16-0092 an
 
 For a full demonstration of the package's functionalities as well as example code, please see the Introduction vignette provided
 For answers to Frequently Asked Questions, please refer to the [STOAT website](https://mol.org/stoat/faq)
+
+## Installation
+To install rstoat, please run the following line of code (requires remotes package)
+
+```r
+remotes::install_github('mapoflife/rstoat', ref='main')
+```
 
 ## Usage
 

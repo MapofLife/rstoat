@@ -1,6 +1,7 @@
 
-#' Get products available to annotate with
+#' @title Retrieve product metadata
 #'
+#' @description Get information on available products for annotation.
 #' Get the spatial and temporal buffer limits for use in when creating a custom annotation.
 #'
 #' @return A data.frame of spatial and temporal buffer limits

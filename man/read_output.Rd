@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract.R
 \name{read_output}
 \alias{read_output}
-\title{Read annotation output into R.}
+\title{Read annotation output into R}
 \usage{
 read_output(directory, drop_event_id = TRUE)
 }
@@ -15,7 +15,7 @@ read_output(directory, drop_event_id = TRUE)
 A data.frame of annotated data, one row per variable per event
 }
 \description{
-This is a convenience function which reads and joins annotation results spread across multiple files for space efficiency.
+Convenience function which reads and joins annotation results spread across multiple files for space efficiency.
 To run this function, please first download annotated data first using download_annotation()
 }
 \examples{

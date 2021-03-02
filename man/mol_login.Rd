@@ -2,7 +2,7 @@
 % Please edit documentation in R/auth.R
 \name{mol_login}
 \alias{mol_login}
-\title{Login to your Map of Life account.}
+\title{Map of Life Login}
 \usage{
 mol_login(email, password = NULL)
 }
