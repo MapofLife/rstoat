@@ -67,7 +67,11 @@ job_details <- function (annotation_id) {
 #' }
 download_annotation <- function (annotation_id, dir = 'annotation_results') {
   url <- build_url('user/annotations', annotation_id, 'download')
-  annotation_url <- httr::GET(url, get_auth_header())$url
+  annotation_url <- get_resp({
+    httr::GET(url, get_auth_header(), ua())
+  })
+  if (is.null(annotation_url)) return(NULL)
+  annotation_url <- annotation_url$url
   tmp_path <- tempfile()
   download_path <- paste0(dir, '/', annotation_id)
   if (!dir.exists(dir)) {
@@ -75,6 +79,7 @@ download_annotation <- function (annotation_id, dir = 'annotation_results') {
     message(paste0('Created directory: ', dir))
   }
   if (dir.exists(download_path)) stop('Annotation already downloaded.')
+
   status <- utils::download.file(annotation_url, tmp_path, mode='wb')
   if (status == 0){
     message('Unzipping')

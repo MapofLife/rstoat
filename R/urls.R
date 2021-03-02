@@ -44,7 +44,7 @@ err_func <- function(e) {
     message('The rstoat package requires an internet connection, please connect to the internet.')
     return(NULL)
   } else {
-    message(paste('Could not connect to: ', base(), ', please raise an issue on github: https://github.com/MapofLife/rstoat/ .'))
+    message(paste('Could not connect to: ', base(), ', please raise an issue on github: https://github.com/MapofLife/rstoat/issues '))
     return(NULL)
   }
 }

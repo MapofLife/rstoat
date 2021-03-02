@@ -18,18 +18,30 @@ mol_login <- function (email, password = NULL) {
   message("Attempting to log in.")
   # check for env vars
 
-  resp <- httr::POST(auth_login_url, body = list(
-    email = email,
-    password = password
-  ),  encode = "json", ua())
-  parsed <- http_error_handle_parse(resp)
-  message(parsed$message)
-  if (parsed$success) {
-    if (keyring::has_keyring_support()) {
-      keyring::key_set_with_value("MOL_USER_TOKEN", password = parsed$authtoken)
+  resp <- get_resp(
+    {
+      httr::POST(auth_login_url, body = list(
+        email = email,
+        password = password
+      ),  encode = "json", ua())
+    })
+  # if (is.null(resp)) return(resp)
+  parsed <- NULL
+  if (!is.null(resp)) {
+    parsed <- http_error_handle_parse(resp)
+  }
+
+  if (!is.null(parsed)){
+    message(parsed$message)
+    if (parsed$success) {
+      if (keyring::has_keyring_support()) {
+        keyring::key_set_with_value("MOL_USER_TOKEN", password = parsed$authtoken)
+      } else {
+        message('Your system does not support keyring access.\nPlease manually set the environment variable MOL_USER_TOKEN to the following:')
+        message(parsed$authtoken)
+      }
     } else {
-      message('Your system does not support keyring access.\nPlease manually set the environment variable MOL_USER_TOKEN to the following:')
-      message(parsed$authtoken)
+      message("You can sign up for a Map of Life account: https://auth.mol.org/register or reset your password: https://auth.mol.org/reset")
     }
   } else {
     message("You can sign up for a Map of Life account: https://auth.mol.org/register or reset your password: https://auth.mol.org/reset")
