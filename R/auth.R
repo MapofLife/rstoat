@@ -40,6 +40,7 @@ mol_login <- function (email, password = NULL) {
       } else {
         message('Your system does not support keyring access.\nPlease manually set the environment variable MOL_USER_TOKEN to the following:')
         message(parsed$authtoken)
+        message('Setting this environment variable will log you in.')
       }
     } else {
       message("You can sign up for a Map of Life account: https://auth.mol.org/register or reset your password: https://auth.mol.org/reset")
