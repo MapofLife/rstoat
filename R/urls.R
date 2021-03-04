@@ -49,14 +49,14 @@ err_func <- function(e) {
   }
 }
 
-get_resp <- function (block) {
+get_resp <- function(block) {
   tryCatch(
     block,
     error = err_func
   )
 }
 
-get_json <- function (..., enc = "UTF-8", simplifyVector = TRUE, query = NULL, authenticate=TRUE) {
+get_json <- function(..., enc = "UTF-8", simplifyVector = TRUE, query = NULL, authenticate=TRUE) {
   resp <- get_resp(
     {
       if (authenticate) {
@@ -70,7 +70,7 @@ get_json <- function (..., enc = "UTF-8", simplifyVector = TRUE, query = NULL, a
   http_error_handle_parse(resp, enc, simplifyVector = simplifyVector)
 }
 
-post_json <- function (..., body = list(), enc = "UTF-8", simplifyVector = TRUE, authenticate=TRUE) {
+post_json <- function(..., body = list(), enc = "UTF-8", simplifyVector = TRUE, authenticate=TRUE) {
   resp <- get_resp({
     if (authenticate) {
       resp <- httr::POST(build_url(...), body = body, encode = "json", ua(), get_auth_header())
@@ -84,7 +84,10 @@ post_json <- function (..., body = list(), enc = "UTF-8", simplifyVector = TRUE,
 }
 
 
-#' Download sample annotation data
+#' @title Download sample annotation data
+#'
+#' @description Download the powerful owl and budgerigar sample datasets (both raw occurrence data and annotated data),
+#' used in the Introduction vignette, from Map of Life's datastore.
 #'
 #' @param dir The directory where to store the data.
 #' @return The path of the downloaded sample data.

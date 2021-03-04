@@ -27,5 +27,4 @@ start_annotation_batch('<dataset_id>', 'My annotation task', layers = list(
 start_annotation_batch('<datset_id>',
   'My 2nd annotation task', layers = c("modis-ndvi-1000-1", "modis-lst_day-1000-1"))
 }
-
 }

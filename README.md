@@ -6,7 +6,7 @@ The Spatiotemporal Observation Annotation Tool (STOAT) is a platform for the fus
 
 STOAT is hosted by Map of Life (https://mol.org) as part of its broader biodiversity informatics platform. Please see the STOAT project homepage at (https://mol.org/stoat).
 
-rstoat is the R package interface to STOAT. rstoat allows for the easy integration of STOAT into existing R-based workflows, and provides all the core functionalities of the STOAT web application, most importantly the submission of annotation tasks, and the retrieval of annotation results. The public repository for rstoat can be found at: https://github.com/MapofLife/rstoat
+rstoat is the R package interface to STOAT. rstoat allows for the easy integration of STOAT into existing R-based workflows, and provides all the core functionalities of the STOAT web application, most importantly the submission of annotation tasks, and the retrieval of annotation results. The public repository for rstoat can be found at: https://github.com/MapofLife/rstoat.
 
 ## Background
 
@@ -32,11 +32,11 @@ The environmental data available through this tool come from a variety of source
 * MODIS Winter/Summer EVI, 1000m, Static
 * EarthEnv layers (various), 1000m, Static
 
-For a full and up-to-date list of layers available in STOAT, visit https://mol.org/stoat/sources
+For a full and up-to-date list of layers available in STOAT, visit https://mol.org/stoat/sources.
 
 ### Processing
 
-All derived environmental datasets, unless specified, are unmodified from their original sources. Environmental layers are hosted by [Descartes Labs](https://www.descarteslabs.com), an environmental data repository and refinery, as well as Google Earth Engine, and are accessed through a series of internal API calls. Documentation for all included datasets can be found at (https://mol.org/stoat/sources)
+All derived environmental datasets, unless specified, are unmodified from their original sources. Environmental layers are hosted by [Descartes Labs](https://www.descarteslabs.com), an environmental data repository and refinery, as well as Google Earth Engine, and are accessed through a series of internal API calls. Documentation for all included datasets can be found at (https://mol.org/stoat/sources).
 
 Remote sensing products such as MODIS and Landsat are filtered to keep only high quality observations (removing clouds and other poor quality data). Specific metadata for each product (including the quality control filtering) are provided with downloaded data.
 
@@ -56,15 +56,16 @@ STOAT is currently in beta, with a manuscript in preparation. More citation info
 
 ## Funding
 
-Funding for the development of STOAT was provided by NASA grants AIST-16-0092 and AIST-18-0034. This project received support from NASA ROSES A.41 to “improve the ease with which the biology and ecology communities can understand, select and use appropriately NASA remote sensing data.”
+Funding for the development of STOAT was provided by NASA grants 80NSSC17K0282 and 80NSSC18K0435, as well as NSF grant DEB-1441737.
 
 # STOAT User Guide
 
-For a full demonstration of the package's functionalities as well as example code, please see the Introduction vignette provided
-For answers to Frequently Asked Questions, please refer to the [STOAT website](https://mol.org/stoat/faq)
+For a full demonstration of the package's functionalities as well as example code, please see the Introduction vignette provided.
+
+For answers to Frequently Asked Questions, please refer to the [STOAT website](https://mol.org/stoat/faq).
 
 ## Installation
-To install rstoat, please run the following line of code (requires remotes package)
+To install rstoat, please run the following line of code (requires remotes package).
 
 ```r
 remotes::install_github('mapoflife/rstoat', ref='main')
@@ -72,9 +73,9 @@ remotes::install_github('mapoflife/rstoat', ref='main')
 
 ## Usage
 
-To use STOAT, one must first [create a Map of Life account](https://auth.mol.org/register). Once an account has been created, a user can upload datasets to be annotated through the [Map of Life uploader](https://mol.org/upload/datasets). *At the current time, data upload must be carried out from the Map of Life website.* All further steps of the annotation process may be carried out either on the web application or in this R package. A list of functions is provided below, most notably "start_annotation_batch"; see the Introduction vignette for example code.
+To use STOAT, one must first [create a Map of Life account](https://auth.mol.org/register). Once an account has been created, a user can upload datasets to be annotated through the [Map of Life uploader](https://mol.org/upload/datasets). *At the current time, data upload must be carried out from the Map of Life website.* All further steps of the annotation process may be carried out either on the web application or in this R package. A list of functions is provided below, most notably "start_annotation_batch()"; see the Introduction vignette for example code.
 
-Additionally, a simple annotation function "start_annotation_simple"" is provided to allow for limited annotation capacity (1000 records) without the need to use the web interface of the Map of Life Uploader. This function has a significantly lower record limit, nor does it serve the complete set of layers provided by the full annotator, but finds use as a testing tool and convenient means of running a pilot annotation. The simple annotator is distinct in its code from the full annotator, utilizing Google Earth Engine rather than Descartes Labs as a data source. Slight discrepancies in annotations are attributable to this, though any severe discrepancies should be reported to the STOAT team. We strongly recommend use of the full annotator for research applications.
+Additionally, a simple annotation function "start_annotation_simple()"" is provided to allow for limited annotation capacity (1000 records) without the need to use the web interface of the Map of Life Uploader. This function has a significantly lower record limit, nor does it serve the complete set of layers provided by the full annotator, but finds use as a testing tool and convenient means of running a pilot annotation. The simple annotator is distinct in its code from the full annotator, utilizing Google Earth Engine rather than Descartes Labs as a data source. Slight discrepancies in annotations are attributable to this, though any severe discrepancies should be reported to the STOAT team. We strongly recommend use of the full annotator for research applications.
 
 ### Package Functions:
 

@@ -1,3 +1,24 @@
+
+get_auth_header <- function() {
+  token <-  Sys.getenv('MOL_USER_TOKEN')
+  if (token == ""){
+    if (keyring::has_keyring_support()) {
+      tryCatch(
+        {
+          token <- keyring::key_get("MOL_USER_TOKEN")
+        },
+        error = function(e) {
+          message(e)
+          stop("Could not access the stored Map of Life credentials, please login by running mol_login().")
+        }
+      )
+    } else {
+      stop("Please login using mol_login(), and set the MOL_USER_TOKEN environment variable.")
+    }
+  }
+  httr::add_headers(`Authentication-Token` = token)
+}
+
 #' @title Map of Life Login
 #'
 #' @description Login to your Map of Life account.
@@ -48,25 +69,4 @@ mol_login <- function (email, password = NULL) {
   } else {
     message("You can sign up for a Map of Life account: https://auth.mol.org/register or reset your password: https://auth.mol.org/reset")
   }
-}
-
-
-get_auth_header <- function () {
-  token <-  Sys.getenv('MOL_USER_TOKEN')
-  if (token == ""){
-    if (keyring::has_keyring_support()) {
-      tryCatch(
-        {
-          token <- keyring::key_get("MOL_USER_TOKEN")
-        },
-        error = function(e) {
-          message(e)
-          stop("Could not access the stored Map of Life credentials, please login by running mol_login().")
-        }
-      )
-    } else {
-      stop("Please login using mol_login(), and set the MOL_USER_TOKEN environment variable.")
-    }
-  }
-  httr::add_headers(`Authentication-Token` = token)
 }

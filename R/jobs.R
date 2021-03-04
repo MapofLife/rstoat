@@ -1,3 +1,4 @@
+
 #' @title View datasets
 #'
 #' @description List logged-in user's uploaded datasets (uploaded to https://mol.org through https://mol.org/upload).
@@ -51,51 +52,6 @@ job_details <- function (annotation_id) {
   res$params$annotation_id <- res$task_id
   res$params$dataset_id <- res$dataset_id
   res$params
-}
-
-#' @title Download annotation results
-#'
-#' @description Download results of a successfully completed batch annotation.
-#' Requires login, please run mol_login(<email_address>)
-#' Uses the output from my_jobs() for the annotation id.
-#'
-#' @param annotation_id The id of the annotation
-#' @param dir The directory where to write the annotation.
-#' @return The path of the downloaded annotation.
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' download_annotation(<annotation_id>, <dir>)
-#' }
-download_annotation <- function (annotation_id, dir = 'annotation_results') {
-  url <- build_url('user/annotations', annotation_id, 'download')
-  annotation_url <- get_resp({
-    httr::GET(url, get_auth_header(), ua())
-  })
-  if (is.null(annotation_url)) return(NULL)
-  annotation_url <- annotation_url$url
-  tmp_path <- tempfile()
-  download_path <- paste0(dir, '/', annotation_id)
-  if (!dir.exists(dir)) {
-    dir.create(dir)
-    message(paste0('Created directory: ', dir))
-  }
-  if (dir.exists(download_path)) {
-    message('Annotation already downloaded.')
-    return(NULL)
-  }
-
-  status <- utils::download.file(annotation_url, tmp_path, mode='wb')
-  if (status == 0){
-    message('Unzipping')
-    utils::unzip(tmp_path, exdir=download_path)
-    message(paste0('Annotation available at: ', download_path))
-    return(download_path)
-  } else {
-    message('There was an error downloading your annotation.')
-    return(NULL)
-  }
 }
 
 #' @title View annotation job species

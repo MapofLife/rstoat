@@ -1,8 +1,13 @@
 Package: rstoat
-Version: 0.2.0
+Version: 1.0.0
 Date: 2021-03-03
 Title: R interface to STOAT platform
-Author: Richard Li, Ajay Ranipeta, John Wilshire, Jeremy Malczyk, Michelle Duong, Robert Guralnick, Adam Wilson, Walter Jetz
+Authors@R: c(person("John", "Wilshire", role = c("aut", "cre"), email = "john.h.wilshire@gmail.com"),
+    person("Richard", "Li", role = "aut"),
+    person("Ajay", "Ranipeta", role = "aut"))
+Author: John Wilshire [aut, cre],
+    Richard Li [aut],
+    Ajay Ranipeta [aut]
 Maintainer: John Wilshire <john.h.wilshire@gmail.com>
 Description: The rstoat package provides a wrapper around the Spatiotemporal Observation Annotation Tool (STOAT, <https://www.mol.org/stoat>) which allows users to run and retrieve results from annotation jobs in the R environment.
 License: BSD_3_clause + file LICENSE

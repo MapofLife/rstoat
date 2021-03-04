@@ -13,7 +13,8 @@ download_sample_data(dir = "sample_data")
 The path of the downloaded sample data.
 }
 \description{
-Download sample annotation data
+Download the powerful owl and budgerigar sample datasets (both raw occurrence data and annotated data),
+used in the Introduction vignette, from Map of Life's datastore.
 }
 \examples{
 \dontrun{
