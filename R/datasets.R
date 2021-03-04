@@ -81,7 +81,10 @@ download_annotation <- function (annotation_id, dir = 'annotation_results') {
     dir.create(dir)
     message(paste0('Created directory: ', dir))
   }
-  if (dir.exists(download_path)) stop('Annotation already downloaded.')
+  if (dir.exists(download_path)) {
+    message('Annotation already downloaded.')
+    return(NULL)
+  }
 
   status <- utils::download.file(annotation_url, tmp_path, mode='wb')
   if (status == 0){
@@ -90,7 +93,8 @@ download_annotation <- function (annotation_id, dir = 'annotation_results') {
     message(paste0('Annotation available at: ', download_path))
     return(download_path)
   } else {
-    stop('There was an error downloading your annotation')
+    message('There was an error downloading your annotation.')
+    return(NULL)
   }
 }
 
