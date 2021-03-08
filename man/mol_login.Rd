@@ -11,6 +11,9 @@ mol_login(email, password = NULL)
 
 \item{password}{Your map of life password. If left blank, and you are in RStudio you can enter it via a secure popup.}
 }
+\value{
+No return value
+}
 \description{
 Login to your Map of Life account.
 }

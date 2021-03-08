@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
   fig.height = 4
 )
 
-options(width = 200)
+old <- options(width = 200)
 ```
 
 The Spatiotemporal Observation Annotation Tool (STOAT) is a tool for the automated and flexible environmental annotation of biodiversity datasets with gridded environmental data. rstoat provides a portal to initiate, check the progress of, and retrieve data from annotation requests. This introduction vignette will demonstrate the basics of data annotation, retrieval, and analysis, all in the R environment.
@@ -178,4 +178,5 @@ lines(density(na.omit(ninox$modis_lst_day_1000_1-273.15)), col = "black")
 legend(x="topright", legend = c("1-day t_buff", "30-day t_buff"),
        pch = 20,
        col=c("black", "red"))
+options(old)
 ```

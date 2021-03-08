@@ -13,6 +13,9 @@ start_annotation_batch(dataset_id, title, layers)
 
 \item{layers}{A list of parameters or vector of codes, of the layers, see the examples below.}
 }
+\value{
+No return value, check my_jobs() to confirm successful job submission.
+}
 \description{
 Submit a dataset previously uploaded on mol.org for annotation.
 To upload a dataset please visit https://mol.org/upload/

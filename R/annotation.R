@@ -1,5 +1,5 @@
 
-extract_layer <- function(layers) {
+extract_layer <- function (layers) {
   if (class(layers) != "list") {
     layers <- lapply(layers, function (slayer) {
       layer = strsplit(slayer, "-")[[1]]
@@ -16,11 +16,11 @@ extract_layer <- function(layers) {
 
 # modis_lst_day_1000_1 -> modis-lst_day-1000-1
 # landsat8_evi_30_16   -> landsat8-evi-30-16
-internal_to_code <- function(code){
+internal_to_code <- function (code) {
   b = strsplit(code, '_')
   sapply(b, function(a){
     n <- length(a)
-    if(n == 4){
+    if (n == 4) {
       return(paste0(a, collapse = '-'))
     } else {
       return(paste0(c(a[1], # product
@@ -30,7 +30,7 @@ internal_to_code <- function(code){
   })
 }
 
-download_annotation_err <- function(e){
+download_annotation_err <- function (e) {
   if(!curl::has_internet()) {
     message('The rstoat package requires an internet connection, please connect to the internet.')
     return(NULL)
@@ -50,6 +50,7 @@ download_annotation_err <- function(e){
 #' @param title The title of the annotation job.
 #' @param layers A list of parameters or vector of codes, of the layers, see the examples below.
 #'
+#' @return No return value, check my_jobs() to confirm successful job submission.
 #' @export
 #'
 #' @examples
@@ -61,7 +62,7 @@ download_annotation_err <- function(e){
 #' start_annotation_batch('<datset_id>',
 #'   'My 2nd annotation task', layers = c("modis-ndvi-1000-1", "modis-lst_day-1000-1"))
 #' }
-start_annotation_batch <- function(dataset_id, title, layers) {
+start_annotation_batch <- function (dataset_id, title, layers) {
   body <- list(
     dataset_id = dataset_id,
     title = title,
@@ -105,9 +106,9 @@ start_annotation_batch <- function(dataset_id, title, layers) {
 #' layers <- 'landsat8-evi-100-16'
 #' start_annotation_simple(events, layers)
 #' }
-start_annotation_simple <- function(events, layers, coords=c('lng','lat'), date='date') {
+start_annotation_simple <- function (events, layers, coords=c('lng','lat'), date='date') {
   events$event_id <- 1:nrow(events)
-  if(any(!(c(coords[1], coords[2], date) %in% names(events)))) {
+  if (any(!(c(coords[1], coords[2], date) %in% names(events)))) {
     stop("Dataframe must contain either columns 'lng', 'lat', 'date', or user must provide arguments for alternate column names")}
   events_subset <- data.frame(event_id = events$event_id,
                               lng = events[[coords[1]]],
@@ -157,11 +158,11 @@ download_annotation <- function (annotation_id, dir = 'annotation_results') {
 
   status <- NULL
   # catch file not found error
-  tryCatch({
+  tryCatch ({
     status <- utils::download.file(annotation_url, tmp_path, mode='wb')
   }, error = download_annotation_err, warning = download_annotation_err
   )
-  if(!is.null(status)){
+  if (!is.null(status)) {
     if (status == 0){
       message('Unzipping')
       utils::unzip(tmp_path, exdir=download_path)
@@ -191,7 +192,7 @@ download_annotation <- function (annotation_id, dir = 'annotation_results') {
 #' \dontrun{
 #' read_output("path/to/your/downloaded/data/directory")
 #' }
-read_output <- function(directory, drop_event_id = TRUE) {
+read_output <- function (directory, drop_event_id = TRUE) {
   files <- list.files(directory, full.names = T)
   species_file <- files[grepl('species.csv$', files)]
   event_file <- files[grepl('events.csv$', files)]

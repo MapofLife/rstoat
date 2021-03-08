@@ -1,4 +1,4 @@
-base <- function(otf=FALSE) {
+base <- function (otf=FALSE) {
   otf_url <- Sys.getenv('MOL_OTF_URL')
   otf_url <- ifelse(otf_url == '', 'https://stoat-otf.azurewebsites.net', otf_url)
   ifelse(
@@ -8,13 +8,13 @@ base <- function(otf=FALSE) {
     )
 }
 
-build_url <- function(..., otf = FALSE) {
+build_url <- function (..., otf = FALSE) {
   paste(base(otf), ..., sep = '/', collapse = '/')
 }
 
 ua <- function () httr::user_agent(paste("rstoat", utils::packageVersion("rstoat")))
 
-http_error_handle_parse <- function(resp, enc = "UTF-8", simplifyVector = TRUE) {
+http_error_handle_parse <- function (resp, enc = "UTF-8", simplifyVector = TRUE) {
   # see: https://community.rstudio.com/t/internet-resources-should-fail-gracefully/49199/7
   if (httr::http_error(resp)) {
     e_message <- tryCatch(
@@ -39,7 +39,7 @@ http_error_handle_parse <- function(resp, enc = "UTF-8", simplifyVector = TRUE) 
   jsonlite::fromJSON(httr::content(resp, "text", encoding = enc), simplifyVector = simplifyVector)
 }
 
-err_func <- function(e) {
+err_func <- function (e) {
   if(!curl::has_internet()) {
     message('The rstoat package requires an internet connection, please connect to the internet.')
     return(NULL)
@@ -49,14 +49,14 @@ err_func <- function(e) {
   }
 }
 
-get_resp <- function(block) {
+get_resp <- function (block) {
   tryCatch(
     block,
     error = err_func
   )
 }
 
-get_json <- function(..., enc = "UTF-8", simplifyVector = TRUE, query = NULL, authenticate=TRUE) {
+get_json <- function (..., enc = "UTF-8", simplifyVector = TRUE, query = NULL, authenticate=TRUE) {
   resp <- get_resp(
     {
       if (authenticate) {
@@ -70,7 +70,7 @@ get_json <- function(..., enc = "UTF-8", simplifyVector = TRUE, query = NULL, au
   http_error_handle_parse(resp, enc, simplifyVector = simplifyVector)
 }
 
-post_json <- function(..., body = list(), enc = "UTF-8", simplifyVector = TRUE, authenticate=TRUE) {
+post_json <- function (..., body = list(), enc = "UTF-8", simplifyVector = TRUE, authenticate=TRUE) {
   resp <- get_resp({
     if (authenticate) {
       resp <- httr::POST(build_url(...), body = body, encode = "json", ua(), get_auth_header())
@@ -90,6 +90,7 @@ post_json <- function(..., body = list(), enc = "UTF-8", simplifyVector = TRUE, 
 #' used in the Introduction vignette, from Map of Life's datastore.
 #'
 #' @param dir The directory where to store the data.
+#'
 #' @return The path of the downloaded sample data.
 #' @export
 #'
@@ -97,7 +98,7 @@ post_json <- function(..., body = list(), enc = "UTF-8", simplifyVector = TRUE, 
 #' \dontrun{
 #' download_sample_data()
 #' }
-download_sample_data <- function(dir = 'sample_data') {
+download_sample_data <- function (dir = 'sample_data') {
   if (!dir.exists(dir)) {
     dir.create(dir)
     message(paste0('Created directory: ', dir))

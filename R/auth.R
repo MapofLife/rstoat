@@ -1,5 +1,5 @@
 
-get_auth_header <- function() {
+get_auth_header <- function () {
   token <-  Sys.getenv('MOL_USER_TOKEN')
   if (token == ""){
     if (keyring::has_keyring_support()) {
@@ -7,7 +7,7 @@ get_auth_header <- function() {
         {
           token <- keyring::key_get("MOL_USER_TOKEN")
         },
-        error = function(e) {
+        error = function (e) {
           message(e)
           stop("Could not access the stored Map of Life credentials, please login by running mol_login().")
         }
@@ -25,6 +25,8 @@ get_auth_header <- function() {
 #'
 #' @param email The email address associated with your Map of Life Account.
 #' @param password Your map of life password. If left blank, and you are in RStudio you can enter it via a secure popup.
+#'
+#' @return No return value
 #' @export
 #'
 #' @examples
