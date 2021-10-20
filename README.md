@@ -2,7 +2,7 @@
 
 ## Summary
 
-The Spatiotemporal Observation Annotation Tool (STOAT) is a platform for the fusion of spatiotemporal biodiversity data (e.g. occurrence records) with remote-sensing and other gridded environmental data. Data fusion (also referred to as environmental annotation) is conducted by retrieving environmental layer values associated with the spatiotemporal coordinates of biodiversity data. STOAT's cloud-based computations simplify and automate the environmental annotation process, eliminating the need for users to download or interface directly with complex environmental layers. STOAT brings versatile environmental annotations to the fingertips of a broader range of scientists, establishing a powerful analysis workflow for rapidly accumulating biodiversity and environmental data.
+The Spatiotemporal Observation Annotation Tool (STOAT) is a platform for the annotation of spatiotemporal biodiversity data (e.g. occurrence records) with values from remote sensing and other gridded environmental datasets. Environmental annotation is conducted by retrieving layer values associated with the spatiotemporal coordinates of biodiversity data. STOAT's cloud-based computations simplify and automate the environmental annotation process, eliminating the need for users to download or interface directly with complex environmental layers. STOAT brings versatile environmental annotations to the fingertips of a broader range of scientists, and contributes to analysis workflows for rapidly accumulating biodiversity and environmental data.
 
 STOAT is hosted by Map of Life (https://mol.org) as part of its broader biodiversity informatics platform. Please see the STOAT project homepage at (https://mol.org/stoat).
 
@@ -18,7 +18,7 @@ The generalized software workflows and tools enable characterization and compari
 
 ## Environmental Data
 
-The environmental data available through this tool come from a variety of sources, including remote-sensing products (e.g. MODIS), and derived products created for a diversity of ecological purposes. Products are broken into categories depending on their temporal grain. We define dynamic products as those with finer-than-monthly temporal grain. Annual products are those with a layer per year (currently there are no layers in STOAT with a Monthly temporal grain, though that designation may be used in the future). Finally, static products are those with a single layer across all time scales. Layers provided on STOAT launch include:
+The environmental data available through this tool come from a variety of sources, including remote sensing products (e.g. MODIS), and derived products created for a diversity of ecological purposes. Products are broken into categories depending on their temporal grain. We define dynamic products as those with finer-than-monthly temporal grain. Annual products are those with a layer per year (currently there are no layers in STOAT with a Monthly temporal grain, though that designation may be used in the future). Finally, static products are those with a single layer across all time scales. Layers provided on STOAT launch include:
 
 *Layer, Spatial Grain, Temporal Grain*
 * MODIS NDVI/EVI, 250m, 1-day
@@ -52,11 +52,11 @@ STOAT provides customizable spatial and temporal buffers around annotated points
 
 STOAT was developed by the Map of Life team at Yale University in collaboration with researchers at the University of Florida and the University at Buffalo. The STOAT team can be contacted at (https://mol.org/contact-us) with any inquiries.
 
-STOAT is currently in beta, with a manuscript in preparation. More citation info will follow.
+STOAT currently has a manuscript in review. More citation info will follow.
 
 ## Funding
 
-Funding for the development of STOAT was provided by NASA grants 80NSSC17K0282 and 80NSSC18K0435, as well as NSF grant DEB-1441737.
+Funding for the development of STOAT is provided by NASA grants AIST-16-0092 and AIST-18-0034, as well as NSF grant DEB-1441737.
 
 # STOAT User Guide
 

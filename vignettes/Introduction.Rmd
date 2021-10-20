@@ -44,9 +44,9 @@ Occurrence data originate from GBIF, for the two species the powerful owl and th
 https://doi.org/10.15468/dl.rx9t53
 https://doi.org/10.15468/dl.48e2yv
 
-Powerful owl data consisted of 8,821 records. Budgerigar data consisted of 18,947 records from which 9000 were sampled to match the powerful owl data. Data were reformatted for the Map of Life uploader, and provided here. Successfully annotated data are also provided, in the STOAT result directory format. Access sample data using the following function:
+Powerful owl data consisted of 8,821 records. Budgerigar data consisted of 18,947 records from which 9000 were sampled to match the powerful owl data. Data were reformatted for the Map of Life uploader, and provided here. Successfully annotated data are also provided, in the STOAT result directory format. Access the full sample data using the following function:
 
-```{r}
+```{r, eval = FALSE}
 #download_sample_data("destination/path")
 samples_directory <- download_sample_data()
 list.files(samples_directory)
@@ -64,7 +64,7 @@ The environmental layer code takes the form: "product-variable-spatialbuffer-tem
 
 Please see ?start_annotation_simple() for definitions of the output columns
 
-```{r}
+```{r, eval = FALSE}
 head(get_products())
 powerful_owl_sample <- read.csv("sample_data/powerful_owl_vignette.csv")
 head(powerful_owl_sample)
@@ -128,15 +128,24 @@ For those interested in following the analysis on their own machine, see Sample 
 
 Begin data visualization by opening the respective output folder and loading in the appropriate csvs. Records are split across multiple files (one for each layer annotated), which must be first merged. STOAT provides a convenience function, read_output(), that automates this procedure and loads annotated data into a single dataframe.
 
-```{r}
+```{r, eval = FALSE}
 #dataframe_name <- read_output("path/to/your/downloaded/data/directory")
 
 # This it the code you would use if you directly downloaded a successful annotation
 #ninox <- read_output(ninox_result_dir)
 
 # Instead, here we read the equivalent output from the sample data directory
-ninox <- read_output(paste0(samples_directory, "/powerful_owl_results"))
+ninox <- read_output(paste0(samples_directory, "/powerful_owl_results")) # powerful owl data
+melopsittacus <- read_output(paste0(samples_directory, "/budgerigar_results")) # budgerigar data
 head(ninox)
+head(melopsittacus)
+```
+
+A small subset of the annotated sample data (1500 records of each species) is found in the package data, and can be used to visualize without internet access to download the full sample dataset.
+
+```{r}
+melopsittacus <- rstoat::melopsittacus_short
+ninox <- rstoat::ninox_short
 ```
 
 Now we can visualize the environmental data for the Powerful Owl with a basic histogram and scatterplot.
@@ -154,7 +163,6 @@ axis.Date(1, ninox$date, at=seq(as.Date("2009-01-01"), as.Date("2019-01-01"), by
 We can compare the environmental characterizations of different species to gain insight into their environmental niches. Here, we compare the Powerful Owl with the Budgerigar, annotated with the same spatial and temporal buffers.
 
 ```{r}
-melopsittacus <- read_output(paste0(samples_directory, "/budgerigar_results"))
 two_species <- rbind(melopsittacus[,1:10], ninox[,1:10])
 plot((modis_lst_day_1000_1-273.15) ~ as.Date(date.y), data = two_species,
      col = as.numeric(factor(two_species$scientificname)),
