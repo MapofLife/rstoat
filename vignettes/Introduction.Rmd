@@ -5,7 +5,6 @@ vignette: >
   %\VignetteIndexEntry{Introduction}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  %\VignetteDepends{methods}
 ---
 
 ```{r, include = FALSE}
@@ -36,7 +35,7 @@ mol_login("your.email@address.com", "password")
 ```
 
 **NOTE:**
-This vignette demonstrates code for an account preloaded with appropriate data (the sample species occurrence datasets below, which are additionally included for download using download_sample_data()). Your Map of Life account starts out empty and thus certain lines of code will not work right out of the box.
+This vignette demonstrates code for an account pre-loaded with appropriate data (the sample species occurrence datasets below, which are additionally included for download using download_sample_data()). Your Map of Life account starts out empty and thus certain lines of code will not work right out of the box.
 
 ### Sample Data
 

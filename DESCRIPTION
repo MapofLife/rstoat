@@ -20,8 +20,7 @@ Imports:
     httr,
     jsonlite,
     curl,
-    keyring,
-    methods
+    keyring
 Suggests: 
     knitr,
     rstudioapi,
