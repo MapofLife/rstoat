@@ -75,12 +75,47 @@ start_annotation_batch <- function (dataset_id, title, layers) {
 #' @title Start simple annotation
 #'
 #' @description Submit a dataframe for on-the-fly annotation.
-#' Does not require login - for use for small numbers of records and pilot jobs
+#' Does not require login - for use for small numbers of records and pilot jobs.
+#'
+#' You can annotate using layers that are on earthengine!
+
+#' Layer parameters:
+#' Used by all:
+#' \itemize{
+#' \item spatial: The spatial buffer in meters.
+#' \item temporal: The temporal buffer in days.
+#' }
+#'
+#' For STOAT layers:
+#' \itemize{
+#'   \item product: The product e.g "srtm", or "landsat8".
+#'   \item variable; The vairable, e.g "elevation", or "evi".
+#' }
+#'
+#' For non STOAT layers, ie those in Google Earth Engine:
+#' \itemize{
+#' \item id: The id of the image in Google Earth Engine, mapped to "product" in the output.
+#' \item static: Whether to load the imagery as an ImageCollection or as an Image.
+#' \item bands: A list, wiht one element, which is used to specify which band of the imagery to use for the annotation, mapped to "variable" in the output.
+#' \item reducers: A list containing one or more of the following: \itemize{
+#'    \item mean
+#'    \item lcv_count
+#'    \item mode
+#'    \item median
+#'    \item stdev
+#'    \item min
+#'    \item max
+#'    \item stdev
+#'  } If only one is provided the output will be assigned to "value", else the output will be named the same as the reducer.
+#'
+#' }
+#'
 #'
 #' @param events A data.frame for on the fly annotation
 #' @param layers A list of parameters or vector of codes, of the layers, see the examples below.
 #' @param coords A vector of length 2 containing column names for record longitudes, and latitudes.
 #' @param date Column name for record dates, dates must take the format YYYY-MM-DD
+#'
 #'
 #' @return Input data.frame with values from the annotation appended, in addition to unique identifier field event_id.
 #' \itemize{
@@ -89,7 +124,8 @@ start_annotation_batch <- function (dataset_id, title, layers) {
 #'  \item variable: Variable used for annotation
 #'  \item s_buff: Spatial buffer in meters applied to occurrence
 #'  \item t_buff: Temporal buffer in days applied to occurrence
-#'  \item value: Annotated value of occurrence from requested layer (mean within buffer)
+#'  \item value: Annotated value of occurrence from requested layer (mean within buffer),
+#'               if there is only one reducer (default), then this value will be here.
 #'  \item stdev: Standard deviation of values within buffer
 #'  \item valid_pixel_count: Number of pixels within buffered area'
 #' }
@@ -103,8 +139,53 @@ start_annotation_batch <- function (dataset_id, title, layers) {
 #'    lat = c(10, 10),
 #'    date = '2015-01-01'
 #' )
+#'
+#' # simple layer string format: PRODUCT-VARIABLE-S_BUFF-T_BUFF
 #' layers <- 'landsat8-evi-100-16'
 #' start_annotation_simple(events, layers)
+#'
+#' start_annotation_simple(events, layers)
+#'
+#' # For lcv_count (Count of landcover value), 'value' returned is a string of
+#' # landcover counts within the AOI.
+#' # The output format is:
+#' #  <LANDCOVER_CLASS>:<COUNT_OF_PIXELS_WITH_THAT_CLASS>
+#' #  classes are seperated by commas.
+#'
+#' start_annotation_simple(events, list(
+#'   list(
+#'     id="COPERNICUS/Landcover/100m/Proba-V-C3/Global",
+#'     s_buff=1000,
+#'     reducers=list("lcv_count", "mode"),
+#'     static=FALSE,
+#'     t_buff=365,
+#'     bands=list("discrete_classification")
+#'   )
+#' ))
+#'
+#' # Annotating with two worldclim layers:
+#' #   bio01 is annual mean temperature
+#' #   bio12 is annual precipitation
+#'
+#' start_annotation_simple(events, list(
+#'  list(
+#'    "id"= "WORLDCLIM/V1/BIO",
+#'    "s_buff"=1000,
+#'    "reducers"=list("mean"),
+#'    "static"= TRUE,
+#'    "t_buff"= 1,
+#'    "bands"=list("bio01")
+#'  ),
+#'  list(
+#'    "id"= "WORLDCLIM/V1/BIO",
+#'    "s_buff"=1000,
+#'    "reducers"=list("mean"),
+#'    "static"= TRUE,
+#'    "t_buff"= 1,
+#'    "bands"=list("bio12")
+#'  )
+#' ))
+
 #' }
 start_annotation_simple <- function (events, layers, coords=c('lng','lat'), date='date') {
   events$event_id <- 1:nrow(events)
@@ -119,6 +200,7 @@ start_annotation_simple <- function (events, layers, coords=c('lng','lat'), date
     params = extract_layer(layers)
   )
   resp <- post_json('annotate/ondemand', body = body, otf=T, authenticate=FALSE)
+
   resp <- merge(events, resp, by = 'event_id')
   resp
 }
