@@ -1,17 +1,19 @@
 
 get_auth_header <- function () {
   token <-  Sys.getenv('MOL_USER_TOKEN')
-  if (token == ""){
-    if (keyring::has_keyring_support()) {
-      tryCatch(
-        {
-          token <- keyring::key_get("MOL_USER_TOKEN")
-        },
-        error = function (e) {
-          message(e)
-          stop("Could not access the stored Map of Life credentials, please login by running mol_login().")
-        }
-      )
+  if (token == "") {
+    if (length(system.file(package = "keyring")) != 0) {
+      if (keyring::has_keyring_support()) {
+        tryCatch(
+          {
+            token <- keyring::key_get("MOL_USER_TOKEN")
+          },
+          error = function (e) {
+            message(e)
+            stop("Could not access the stored Map of Life credentials, please login by running mol_login().")
+          }
+        )
+      }
     } else {
       stop("Please login using mol_login(), and set the MOL_USER_TOKEN environment variable.")
     }
@@ -34,8 +36,8 @@ get_auth_header <- function () {
 #' mol_login("your.email@company.com")
 #' }
 mol_login <- function (email, password = NULL) {
-  if (class(email) != "character") stop("Please provide an email.")
-  if (is.null(password) & Sys.getenv("RSTUDIO") == "1") {
+  if ("character" %in% is(email)) stop("Please provide an email.")
+  if (is.null(password) && Sys.getenv("RSTUDIO") == "1") {
     password <- rstudioapi::askForPassword("Please enter your password for https://mol.org")
   }
   auth_login_url = build_url('auth/login')
@@ -58,9 +60,14 @@ mol_login <- function (email, password = NULL) {
   if (!is.null(parsed)){
     message(parsed$message)
     if (parsed$success) {
-      if (keyring::has_keyring_support()) {
-        keyring::key_set_with_value("MOL_USER_TOKEN", password = parsed$authtoken)
-      } else {
+      show_message <- TRUE
+      if (length(system.file(package = "keyring")) != 0) {
+        if (keyring::has_keyring_support()) {
+          keyring::key_set_with_value("MOL_USER_TOKEN", password = parsed$authtoken)
+          show_message <- FALSE
+        }
+      } 
+      if (show_message) {
         message('Your system does not support keyring access.\nPlease manually set the environment variable MOL_USER_TOKEN to the following:')
         message(parsed$authtoken)
         message('Setting this environment variable will log you in.')

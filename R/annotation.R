@@ -1,6 +1,6 @@
 
-extract_layer <- function (layers) {
-  if (class(layers) != "list") {
+extract_layer <- function(layers) {
+  if (list %in% is(layers)) {
     layers <- lapply(layers, function (slayer) {
       layer = strsplit(slayer, "-")[[1]]
       if (length(layer) != 4) {
@@ -188,13 +188,13 @@ start_annotation_batch <- function (dataset_id, title, layers) {
 
 #' }
 start_annotation_simple <- function (events, layers, coords=c('lng','lat'), date='date') {
-  events$event_id <- 1:nrow(events)
   if (any(!(c(coords[1], coords[2], date) %in% names(events)))) {
     stop("Dataframe must contain either columns 'lng', 'lat', 'date', or user must provide arguments for alternate column names")}
   events_subset <- data.frame(event_id = events$event_id,
                               lng = events[[coords[1]]],
                               lat = events[[coords[2]]],
-                              date = events[[date]])
+                              date = events[[date]],
+                              stringsAsFactors = F)
   body <- list(
     events = events_subset,
     params = extract_layer(layers)

@@ -1,3 +1,7 @@
+# rstoat 1.0.3
+
+* Updated to move keyring package into suggests from imports.
+
 # rstoat 1.0.2
 
 * Updated start_annotate_simple documentation to reflect backend updates.

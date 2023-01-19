@@ -1,6 +1,6 @@
 Package: rstoat
-Version: 1.0.2
-Date: 2021-10-21
+Version: 1.0.3
+Date: 2023-1-19
 Title: R Interface to the 'STOAT' Platform
 Authors@R: c(person("John", "Wilshire", role = c("aut", "cre"), email = "john.wilshire@yale.edu"),
     person("Richard", "Li", role = "aut"),
@@ -19,12 +19,12 @@ Depends: R (>= 2.10)
 Imports:
     httr,
     jsonlite,
-    curl,
-    keyring
+    curl
 Suggests: 
+    keyring,
     knitr,
     rstudioapi,
     dplyr,
     rmarkdown
 VignetteBuilder: knitr, rmarkdown
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
